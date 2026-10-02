@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PromptVault — готовые промпты для ИИ</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0A0A10;--amber:#FBBF24;--sky:#38BDF8}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{background:var(--bg);font-family:Manrope,system-ui,sans-serif;color:#e2e8f0;overflow-x:hidden;padding-top:env(safe-area-inset-top)}
+.fd{font-family:Unbounded,sans-serif}
+.aurora{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.35}
+.o1{width:480px;height:480px;background:var(--amber);top:-160px;right:-120px;animation:a 20s ease-in-out infinite}
+.o2{width:440px;height:440px;background:var(--sky);bottom:-140px;left:-120px;opacity:.25;animation:b 24s ease-in-out infinite}
+@keyframes a{50%{transform:translate(-220px,200px)}}@keyframes b{50%{transform:translate(260px,-160px)}}
+.glass{background:rgba(255,255,255,.05);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1)}
+.chip{padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.15);color:#cbd5e1;cursor:pointer;transition:.2s;white-space:nowrap}
+.chip:hover{border-color:var(--amber)}.chip.on{background:var(--amber);color:#1a1200;border-color:var(--amber);box-shadow:0 0 20px rgba(251,191,36,.5)}
+.btn{padding:9px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:.25s;background:var(--amber);color:#1a1200}
+.btn:hover{box-shadow:0 0 26px 3px rgba(251,191,36,.7)}
+.btn.g{background:transparent;color:#e2e8f0;border:1px solid rgba(255,255,255,.2)}.btn.g:hover{border-color:var(--sky);box-shadow:0 0 20px rgba(56,189,248,.5)}
+.card{transition:.25s}.card:hover{transform:translateY(-4px);border-color:rgba(251,191,36,.45)}
+.lock{filter:blur(5px);user-select:none}
+input,select,textarea{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:9px 12px;width:100%;color:#fff;font:inherit;font-size:14px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--sky)}
+select option{background:#14141f}
+.grad{background:linear-gradient(90deg,#FBBF24,#f472b6,#38BDF8,#FBBF24);background-size:300% 100%;animation:s 4s linear infinite;color:#1a1200;font-weight:800;border-radius:12px;padding:14px;cursor:pointer;transition:.25s}
+.grad:hover{box-shadow:0 0 32px 6px rgba(251,191,36,.6)}@keyframes s{to{background-position:300% 0}}
+.pro{border:2px solid var(--amber);box-shadow:0 0 36px rgba(251,191,36,.3)}
+.plan{transition:.3s;position:relative}.plan:hover{transform:scale(1.04)}
+.badge{position:absolute;top:-13px;right:18px;background:var(--amber);color:#1a1200;font-size:12px;font-weight:800;padding:4px 12px;border-radius:999px;animation:p 1.6s infinite}
+@keyframes p{0%,100%{box-shadow:0 0 0 0 rgba(251,191,36,.8)}50%{box-shadow:0 0 0 12px transparent}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#14141f;border:1px solid var(--amber);padding:11px 18px;border-radius:12px;z-index:60;font-size:14px}
+.hidden{display:none}.scroll-x{overflow-x:auto;scrollbar-width:none}
+.social{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.15);transition:.25s}
+.social:hover{box-shadow:0 0 22px rgba(56,189,248,.7);border-color:var(--sky);color:#7dd3fc}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.step{counter-reset:x}
+.num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--amber);color:#1a1200;flex:none}
+details{border-bottom:1px solid rgba(255,255,255,.1);padding:14px 0}summary{cursor:pointer;font-weight:700;color:#fff;list-style:none;display:flex;justify-content:space-between}
+summary::after{content:"+";color:var(--amber);font-size:20px}details[open] summary::after{content:"–"}
+details p{margin-top:8px;color:#94a3b8;font-size:14px}
+.ph{color:var(--amber);font-weight:700}
+h2.sec{font-family:Unbounded,sans-serif;color:#fff;font-size:1.6rem}
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i></div>
+<header class="glass sticky top-0 z-40" style="border-width:0 0 1px">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center gap-3">
+    <a href="#top" class="fd font-bold text-white">Prompt<span style="color:var(--amber)">Vault</span></a>
+    <nav class="hidden md:flex gap-6 text-sm text-slate-300"><a href="#how">Как это работает</a><a href="#builder">Конструктор</a><a href="#catalog">Каталог</a><a href="#pricing">Тарифы</a><a href="#faq">Вопросы</a></nav>
+    <a class="social" href="https://t.me/CIVIVII" target="_blank" rel="noopener">Telegram @CIVIVII</a>
+  </div>
+</header>
+<main id="top" class="max-w-6xl mx-auto px-4 py-10">
+  <section>
+    <h1 class="fd text-3xl md:text-5xl font-bold text-white leading-tight max-w-3xl">Готовые промпты для ИИ: скопировал, вставил, получил нормальный ответ</h1>
+    <p class="mt-4 text-slate-300 max-w-xl text-lg">Промпт — это запрос, который вы отправляете нейросети (ChatGPT, Claude, Gemini). Мы собрали запросы, которые дают точный результат для работы, учёбы и контента.</p>
+    <div class="flex flex-wrap gap-3 mt-6"><a href="#catalog" class="btn">Смотреть промпты</a><a href="#builder" class="btn g">Собрать свой за минуту</a></div>
+    <p id="stats" class="mt-5 text-sm text-slate-400"></p>
+  </section>
+
+  <section id="how" class="mt-20">
+    <h2 class="sec">Как это работает</h2>
+    <div class="grid md:grid-cols-3 gap-4 mt-6">
+      <div class="glass rounded-2xl p-5 flex gap-4"><span class="num">1</span><div><h3 class="text-white font-bold">Выберите промпт</h3><p class="text-sm text-slate-400 mt-1">Найдите нужный в каталоге или соберите свой в конструктора.</p></div></div>
+      <div class="glass rounded-2xl p-5 flex gap-4"><span class="num">2</span><div><h3 class="text-white font-bold">Подставьте свои данные</h3><p class="text-sm text-slate-400 mt-1">Замените слова в <span class="ph">[КВАДРАТНЫХ СКОБКАХ]</span> своим текстом: вакансией, темой, кодом.</p></div></div>
+      <div class="glass rounded-2xl p-5 flex gap-4"><span class="num">3</span><div><h3 class="text-white font-bold">Вставьте в нейросеть</h3><p class="text-sm text-slate-400 mt-1">Нажмите «Скопировать» и вставьте в ChatGPT, Claude или Gemini.</p></div></div>
+    </div>
+  </section>
+
+  <section class="mt-16">
+    <h2 class="sec">Чем хороший промпт лучше обычного</h2>
+    <div class="grid md:grid-cols-2 gap-4 mt-6">
+      <div class="glass rounded-2xl p-5"><p class="text-xs text-red-300 font-bold">Обычный запрос</p><p class="mt-3 font-mono text-sm text-slate-300">Напиши пост про мой курс.</p><p class="mt-4 text-sm text-slate-400">Результат: общие фразы вроде «в современном мире», которые приходится переписывать.</p></div>
+      <div class="glass rounded-2xl p-5" style="border-color:rgba(251,191,36,.5)"><p class="text-xs text-emerald-400 font-bold">Промпт из PromptVault</p><p class="mt-3 font-mono text-sm text-slate-200">Ты автор Telegram-канала про <span class="ph">[ТЕМА]</span>. Напиши пост до 900 знаков. Первая строка цепляющая, без штампов. В конце вопрос читателям.</p><p class="mt-4 text-sm text-slate-400">Результат: готовый короткий пост нужной длины, который можно публиковать.</p></div>
+    </div>
+  </section>
+
+  <section id="builder" class="mt-20">
+    <h2 class="sec">Конструктор промптов</h2>
+    <p class="text-slate-400 mt-2">Не нашли нужное? Заполните поля, и промпт соберётся сам. Бесплатно, без регистрации.</p>
+    <div class="grid md:grid-cols-2 gap-4 mt-6">
+      <div class="glass rounded-2xl p-5 space-y-3">
+        <label class="block text-sm text-slate-400">Кем должен быть ИИ
+          <select id="b_role" class="mt-1"><option>опытный маркетолог</option><option>преподаватель</option><option>карьерный консультант</option><option>редактор</option><option>программист-наставник</option><option>финансовый аналитик</option></select></label>
+        <label class="block text-sm text-slate-400">Что нужно сделать
+          <input id="b_task" class="mt-1" placeholder="Например: написать пост о запуске курса"></label>
+        <label class="block text-sm text-slate-400">Для кого результат
+          <input id="b_aud" class="mt-1" placeholder="Например: студенты 18–25 лет"></label>
+        <div class="grid grid-cols-2 gap-3">
+          <label class="block text-sm text-slate-400">Тон
+            <select id="b_tone" class="mt-1"><option>дружелюбный</option><option>деловой</option><option>экспертный</option><option>с юмором</option></select></label>
+          <label class="block text-sm text-slate-400">Формат
+            <select id="b_fmt" class="mt-1"><option>короткий текст</option><option>список по пунктам</option><option>таблица</option><option>пошаговый план</option></select></label>
+        </div>
+      </div>
+      <div class="glass rounded-2xl p-5 flex flex-col">
+        <h3 class="text-white font-bold mb-3">Ваш промпт</h3>
+        <textarea id="b_out" readonly class="flex-1 min-h-[220px]"></textarea>
+        <button id="b_copy" class="btn mt-3">Скопировать</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalog" class="mt-20">
+    <h2 class="sec">Каталог промптов</h2>
+    <p class="text-slate-400 mt-2">Выберите категорию или найдите по слову. Промпты с замком <span style="color:var(--amber)">🔒</span> открываются в Pro.</p>
+    <input id="q" class="mt-4" placeholder="Поиск: резюме, пост, письмо, код…" aria-label="Поиск">
+    <div id="chips" class="flex gap-2 mt-4 scroll-x pb-1"></div>
+    <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5"></div>
+    <p id="empty" class="hidden text-slate-400 mt-6">Ничего не найдено. Попробуйте другое слово или категорию «Все».</p>
+  </section>
+
+  <section id="pricing" class="mt-20">
+    <h2 class="sec text-center">Что бесплатно, а что в Pro</h2>
+    <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto mt-10">
+      <article class="glass rounded-2xl p-6 plan">
+        <h3 class="fd text-white">Бесплатный</h3><p class="fd text-4xl text-white mt-3">0 ₽</p><p class="text-sm text-slate-400 mt-1">Навсегда, без карты и регистрации</p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-300"><li>✓ Конструктор промптов без ограничений</li><li id="freeCount">✓ Бесплатные промпты из каталога</li><li>✓ Копирование в один клик</li></ul>
+        <a href="#catalog" class="btn g block text-center mt-6">Открыть каталог</a>
+      </article>
+      <article class="glass rounded-2xl p-6 plan pro">
+        <span class="badge">ПОПУЛЯРНО</span>
+        <h3 class="fd text-white">Pro</h3><p class="fd text-4xl text-white mt-3">390 ₽<span class="text-base text-slate-400"> / месяц</span></p><p class="text-sm text-slate-400 mt-1">Отмена в любой момент</p>
+        <ul class="mt-5 space-y-2 text-sm text-slate-200"><li>✓ Все промпты каталога, включая закрытые</li><li>✓ Новые промпты каждую неделю</li><li>✓ Готовые цепочки: резюме → письмо → собеседование</li><li>✓ Закрытый Telegram-чат с автором</li></ul>
+        <a id="buy" href="https://t.me/CIVIVII" target="_blank" rel="noopener" class="grad block text-center mt-6">Получить Pro за 390 руб</a>
+        <p class="text-xs text-slate-400 mt-3 text-center">Кнопка открывает Telegram автора: там оплата и выдача доступа.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="faq" class="mt-20 max-w-3xl">
+    <h2 class="sec">Частые вопросы</h2>
+    <div class="mt-4">
+      <details><summary>Нужна ли регистрация?</summary><p>Нет. Каталог, поиск и конструктор работают сразу. Регистрация и оплата нужны только для Pro.</p></details>
+      <details><summary>С какими нейросетями работают промпты?</summary><p>С ChatGPT, Claude, Gemini и другими текстовыми нейросетями. Достаточно вставить промпт в чат.</p></details>
+      <details><summary>Что делать со словами в [КВАДРАТНЫХ СКОБКАХ]?</summary><p>Это места для ваших данных. Замените их на свой текст (тему, вакансию, код) перед отправкой в нейросеть.</p></details>
+      <details><summary>Как получить Pro?</summary><p>Нажмите кнопку «Получить Pro» и напишите автору в Telegram. Там вы оплатите и получите доступ ко всем промптам.</p></details>
+    </div>
+  </section>
+</main>
+<footer class="glass mt-20" style="border-width:1px 0 0">
+  <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row justify-between gap-5 md:items-center">
+    <div><p class="fd text-white">Prompt<span style="color:var(--amber)">Vault</span></p><p class="text-sm text-slate-400 mt-1">Автор: @CIVIVII. Вопросы и сотрудничество — в Telegram.</p></div>
+    <div class="flex gap-3 flex-wrap"><a class="social" href="https://t.me/CIVIVII" target="_blank" rel="noopener">Telegram</a><a class="social" href="https://youtube.com" target="_blank" rel="noopener">YouTube</a></div>
+  </div>
+  <p class="text-center text-xs text-slate-500 pb-5">© 2026 PromptVault</p>
+</footer>
+<div id="toast" class="toast hidden"></div>
+<script>
+const $=id=>document.getElementById(id);
+const P=[
+ {c:'Работа',t:'Резюме под вакансию',p:'Ты карьерный консультант. Вот моё резюме: [ВСТАВЬ ТЕКСТ]. Вот описание вакансии: [ВСТАВЬ ТЕКСТ]. Перепиши резюме так, чтобы ключевые слова из вакансии были в нём естественно. Не придумывай опыт, которого нет. Выведи итог и отдельно список изменений.'},
+ {c:'Работа',t:'Ответ на сложное письмо',p:'Ты деловой редактор. Вот письмо, на которое нужно ответить: [ТЕКСТ]. Моя позиция: [ПОЗИЦИЯ]. Напиши вежливый и чёткий ответ на 5–7 предложений, без канцелярита. Предложи два варианта тона: мягкий и жёсткий.'},
+ {c:'Работа',t:'Подготовка к собеседованию',p:'Ты опытный рекрутер на позицию [ДОЛЖНОСТЬ]. Задай мне 5 вопросов по одному, жди моего ответа и после каждого давай оценку по 10-балльной шкале с конкретным советом, как ответить сильнее.'},
+ {c:'Учёба',t:'Объясни как пятикласснику',p:'Объясни тему «[ТЕМА]» простыми словами, как для школьника. Сначала одной фразой суть, затем аналогия из жизни, затем 3 примера. В конце задай мне 3 проверочных вопроса.'},
+ {c:'Учёба',t:'План изучения за 30 дней',p:'Составь план изучения «[НАВЫК]» на 30 дней при нагрузке [N] минут в день. Разбей на недели, для каждого дня укажи задачу и критерий «я это усвоил». Добавь 3 способа проверить прогресс.'},
+ {c:'Контент',t:'Пост для Telegram-канала',p:'Ты автор популярного Telegram-канала про [ТЕМА]. Напиши пост до 900 знаков на тему «[ТЕМА ПОСТА]». Первая строка — цепляющая, без кликбейта. В конце вопрос к читателям. Без воды и штампов вроде «в современном мире».'},
+ {c:'Контент',t:'10 идей для видео',p:'Я веду YouTube-канал про [НИША] для аудитории [КТО]. Придумай 10 идей видео. Для каждой: рабочее название, крючок на первые 10 секунд и почему это будет интересно зрителю.'},
+ {c:'Код',t:'Разбор ошибки в коде',p:'Ты наставник по программированию. Вот код: [КОД]. Вот ошибка: [ОШИБКА]. Объясни простыми словами, в чём причина, покажи исправленный код и объясни, как избежать такой ошибки в будущем.'},
+ {c:'Учёба',t:'Конспект из длинного текста',p:'Вот текст: [ТЕКСТ]. Сделай конспект: главная мысль в одном предложении, 7 ключевых тезисов списком, 3 термина с определениями. Ничего не добавляй от себя.'},
+ {c:'Контент',t:'Сценарий короткого видео',p:'Напиши сценарий вертикального видео на 45 секунд на тему «[ТЕМА]». Разбей на кадры: что говорим, что показываем. Первые 3 секунды — сильный крючок. В конце призыв подписаться.'},
+ {c:'Бизнес',t:'Анализ конкурентов',pro:1,p:''},
+ {c:'Бизнес',t:'Коммерческое предложение за 10 минут',pro:1,p:''},
+ {c:'Работа',t:'Цепочка: резюме → письмо → интервью',pro:1,p:''},
+ {c:'Финансы',t:'Личный бюджет и подушка безопасности',pro:1,p:''}
+];
+const cats=['Все',...new Set(P.map(x=>x.c))];let cat='Все';
+function toast(m){const t=$('toast');t.textContent=m;t.classList.remove('hidden');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.add('hidden'),2600)}
+async function copy(txt){try{await navigator.clipboard.writeText(txt)}catch(e){const a=document.createElement('textarea');a.value=txt;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}toast('Скопировано. Вставьте в ChatGPT, Claude или Gemini.')}
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function draw(){
+  $('chips').innerHTML=cats.map(c=>`<button class="chip${c===cat?' on':''}" data-c="${c}">${c}</button>`).join('');
+  document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{cat=b.dataset.c;draw()});
+  const q=$('q').value.trim().toLowerCase();
+  const list=P.map((x,i)=>({...x,i})).filter(x=>(cat==='Все'||x.c===cat)&&(!q||(x.t+x.p+x.c).toLowerCase().includes(q)));
+  $('empty').classList.toggle('hidden',list.length>0);
+  $('grid').innerHTML=list.map(x=>`<article class="glass rounded-2xl p-5 card flex flex-col">
+    <div class="flex justify-between text-xs text-slate-400"><span>${x.c}</span>${x.pro?'<span style="color:var(--amber)">🔒 Pro</span>':'<span class="text-emerald-400">Бесплатно</span>'}</div>
+    <h3 class="fd text-white text-sm mt-2">${x.t}</h3>
+    <p class="text-sm text-slate-400 mt-2 flex-1 ${x.pro?'lock':''}">${x.pro?'Полный текст промпта доступен в Pro-версии. Там готовая структура и подсказки.':esc(x.p)}</p>
+    <button class="btn ${x.pro?'g':''} mt-4" data-i="${x.i}">${x.pro?'Открыть в Pro':'Скопировать'}</button></article>`).join('');
+  document.querySelectorAll('#grid button').forEach(b=>b.onclick=()=>{const x=P[b.dataset.i];x.pro?($('pricing').scrollIntoView(),toast('Этот промпт входит в Pro. Условия ниже.')):copy(x.p)});
+}
+function build(){
+  const r=$('b_role').value,t=$('b_task').value.trim()||'[опиши задачу]',a=$('b_aud').value.trim()||'широкой аудитории';
+  $('b_out').value=`Ты — ${r}.\n\nЗадача: ${t}.\nДля кого: ${a}.\nТон: ${$('b_tone').value}.\nФормат ответа: ${$('b_fmt').value}.\n\nПеред ответом задай мне до 3 уточняющих вопросов, если данных не хватает. Не используй общие фразы и штампы. В конце предложи, как можно улучшить результат.`;
+}
+['b_role','b_task','b_aud','b_tone','b_fmt'].forEach(id=>$(id).addEventListener('input',build));
+$('b_copy').onclick=()=>copy($('b_out').value);
+$('q').addEventListener('input',draw);
+const F=P.filter(x=>!x.pro).length;$('stats').textContent=`${F} бесплатных промптов · ${P.length-F} в Pro · ${cats.length-1} категорий · без регистрации`;$('freeCount').textContent=`✓ ${F} готовых промптов в каталоге`;
+build();draw();
+</script>
+</body>
+</html>
